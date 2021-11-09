@@ -9,16 +9,4 @@ const routes = Router()
 routes.post("/register", new CreateUserController().handle)
 routes.post("/login", new LoginController().handle)
 
-routes.get(
-  "/admin",
-  [authentication(), authorization(["admin"])],
-  (req, res) => {
-    res.send("Admin route")
-  }
-)
-
-routes.get("/public", (req, res) => {
-  res.send("Public route")
-})
-
 export { routes }
