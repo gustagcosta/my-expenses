@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { decode, verify } from "jsonwebtoken"
 
-export const auth = () => {
+export const authentication = () => {
   return async (request: Request, response: Response, next: NextFunction) => {
     const authHeaders = request.headers.authorization
 

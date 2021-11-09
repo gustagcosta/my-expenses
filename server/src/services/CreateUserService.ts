@@ -1,6 +1,10 @@
 import { hash } from "bcryptjs"
 import { User } from "../entities/User"
-import { UserRepository } from "../repositories"
+import {
+  RoleRepository,
+  UserRepository,
+  UserRoleRepository,
+} from "../repositories"
 import { validateEmail } from "../utils/validateEmail"
 
 type UserRequest = {
@@ -38,6 +42,13 @@ export class CreateUserService {
     const newUser = new User(name, email, passwordHash)
 
     await UserRepository().insert(newUser)
+
+    const userRole = await RoleRepository().where("name", "=", "user").first()
+
+    await UserRoleRepository().insert({
+      user_id: newUser.id,
+      role_id: userRole.id,
+    })
 
     return newUser
   }
