@@ -1,8 +1,9 @@
 import { Request, Response } from "express"
+import BillService from "../services/BillService"
 
 class BillController {
   async index(request: Request, response: Response) {
-    const result = {}
+    const result = await BillService.index(request.userId)
 
     if (result instanceof Error) {
       return response.status(400).json(result.message)
@@ -12,7 +13,7 @@ class BillController {
   }
 
   async show(request: Request, response: Response) {
-    const result = {}
+    const result = await BillService.show(request.params.id, request.userId)
 
     if (result instanceof Error) {
       return response.status(400).json(result.message)
@@ -22,7 +23,16 @@ class BillController {
   }
 
   async store(request: Request, response: Response) {
-    const result = {}
+    const { description, expire_date, value } = request.body
+
+    const userId = request.userId
+
+    const result = await BillService.store({
+      description,
+      expire_date,
+      value,
+      userId,
+    })
 
     if (result instanceof Error) {
       return response.status(400).json(result.message)
@@ -32,7 +42,17 @@ class BillController {
   }
 
   async update(request: Request, response: Response) {
-    const result = {}
+    const { id, description, expire_date, value } = request.body
+
+    const userId = request.userId
+
+    const result = await BillService.update({
+      id,
+      description,
+      expire_date,
+      value,
+      userId,
+    })
 
     if (result instanceof Error) {
       return response.status(400).json(result.message)
@@ -42,7 +62,7 @@ class BillController {
   }
 
   async destroy(request: Request, response: Response) {
-    const result = {}
+    const result = await BillService.destroy(request.params.id)
 
     if (result instanceof Error) {
       return response.status(400).json(result.message)

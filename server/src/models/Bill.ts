@@ -4,7 +4,7 @@ export class Bill extends BaseEntity {
   description: string
   expire_date: Date
   value: number
-  user_id: number
+  user_id: string
 
   constructor() {
     super()
