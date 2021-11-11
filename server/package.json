@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon src/main.ts",
     "build": "tsc --project ./",
+    "postinstall": "yarn build",
     "start": "node dist/main.js",
     "knex": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts"
   },
@@ -29,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.13",
     "mysql2": "^2.3.3-rc.0",
+    "pg": "^8.7.1",
     "uuid": "^8.3.2"
   }
 }
