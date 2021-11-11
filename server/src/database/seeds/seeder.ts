@@ -1,23 +1,19 @@
 import "../../dotenv"
 import { Knex } from "knex"
-import { User } from "../../entities/User"
+import { User } from "../../models/User"
 import { hash } from "bcryptjs"
-import {
-  RoleRepository,
-  UserRepository,
-  UserRoleRepository,
-} from "../../repositories"
-import { Role } from "../../entities/Role"
+import { Role } from "../../models/Role"
+import { db } from "../db"
 
 export async function seed(knex: Knex): Promise<void> {
-  await UserRoleRepository().del()
-  await UserRepository().del()
-  await RoleRepository().del()
+  await db("users_roles").del()
+  await db("users").del()
+  await db("roles").del()
 
   const adminRole = new Role("admin")
   const userRole = new Role("user")
 
-  await RoleRepository().insert([adminRole, userRole])
+  await db("roles").insert([adminRole, userRole])
 
   const passwordHash = await hash(process.env.ADMIN_PASSWORD, 8)
 
@@ -27,14 +23,14 @@ export async function seed(knex: Knex): Promise<void> {
     passwordHash
   )
 
-  await UserRepository().insert(adminUser)
+  await db("users").insert(adminUser)
 
-  await UserRoleRepository().insert({
+  await db("users_roles").insert({
     user_id: adminUser.id,
     role_id: adminRole.id,
   })
 
-  await UserRoleRepository().insert({
+  await db("users_roles").insert({
     user_id: adminUser.id,
     role_id: userRole.id,
   })

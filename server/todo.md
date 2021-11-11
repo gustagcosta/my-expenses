@@ -3,5 +3,7 @@
 [x] tests
 [] create bills methods resource
 [] tests
-[] improve status code control
+[] do refactor
+[] improve status code responses
+[] do use typeorm instead of knex? 
 [] get ready for deployment

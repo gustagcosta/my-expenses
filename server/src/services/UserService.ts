@@ -1,11 +1,9 @@
+import { compare } from "bcryptjs"
+import { sign } from "jsonwebtoken"
 import { hash } from "bcryptjs"
-import { User } from "../entities/User"
-import {
-  RoleRepository,
-  UserRepository,
-  UserRoleRepository,
-} from "../repositories"
+import { User } from "../models/User"
 import { validateEmail } from "../utils/validateEmail"
+import { db } from "../database/db"
 
 type UserRequest = {
   name: string
@@ -13,13 +11,13 @@ type UserRequest = {
   password: string
 }
 
-export class CreateUserService {
-  async execute({ name, email, password }: UserRequest): Promise<User | Error> {
+class UserService {
+  async store({ name, email, password }: UserRequest): Promise<User | Error> {
     if ([name, email, password].some((i) => i == undefined || i == null)) {
       return new Error("Missing data")
     }
 
-    const existUser = await UserRepository().where("email", "=", email).first()
+    const existUser = await db("users").where("email", "=", email).first()
 
     if (existUser) {
       return new Error("User already exists")
@@ -41,11 +39,11 @@ export class CreateUserService {
 
     const newUser = new User(name, email, passwordHash)
 
-    await UserRepository().insert(newUser)
+    await db("users").insert(newUser)
 
-    const userRole = await RoleRepository().where("name", "=", "user").first()
+    const userRole = await db("roles").where("name", "=", "user").first()
 
-    await UserRoleRepository().insert({
+    await db("users_roles").insert({
       user_id: newUser.id,
       role_id: userRole.id,
     })
@@ -53,3 +51,5 @@ export class CreateUserService {
     return newUser
   }
 }
+
+export default new UserService()
