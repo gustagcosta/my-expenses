@@ -3,4 +3,6 @@
 [x] tests
 [x] create bills methods resource
 [] test bills routes
-[] get ready for deployment
+[] setup db production
+[] setup cd script
+[] deployment
