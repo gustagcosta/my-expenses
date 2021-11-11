@@ -7,6 +7,10 @@ const app = express()
 
 app.use(express.json())
 
+app.get("/", (req, res) => {
+  res.send("Salve...")
+})
+
 app.use("/api/v1", routes)
 
 app.use(notFound);
