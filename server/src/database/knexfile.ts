@@ -24,8 +24,7 @@ const configs: IKnexConfig = {
   production: {
     client: "pg",
     connection: {
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
+      connectionString: process.env.DATABASE_URL
     },
     useNullAsDefault: true,
     pool: { min: 0, max: 10 },
