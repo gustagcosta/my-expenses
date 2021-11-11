@@ -1,14 +1,11 @@
 import { NextFunction, Request, Response } from "express"
-import { decode, verify } from "jsonwebtoken"
-import { UserRepository, UserRoleRepository } from "../repositories"
+import { db } from "../database/db"
 
 export const authorization = (roles: string[]) => {
   return async (request: Request, response: Response, next: NextFunction) => {
     const { userId } = request
 
-    const user = await UserRepository().where("id", "=", userId).first()
-
-    const userRoles = await UserRoleRepository()
+    const userRoles = await db("users_roles")
       .where("user_id", "=", userId)
       .join("roles", { "roles.id": "users_roles.role_id" })
       .select("name")

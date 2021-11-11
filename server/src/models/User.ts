@@ -1,5 +1,4 @@
 import { BaseEntity } from "./BaseEntity"
-import { Role } from "./Role"
 
 export class User extends BaseEntity {
   name: string

@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
-import { CreateUserService } from "../services/CreateUserService"
+import userService from "../services/UserService"
 
-export class CreateUserController {
-  async handle(request: Request, response: Response) {
+class UserController {
+  async store(request: Request, response: Response) {
     const { name, email, password } = request.body
 
-    const result = await new CreateUserService().execute({
+    const result = await userService.store({
       name,
       email,
       password,
@@ -18,3 +18,5 @@ export class CreateUserController {
     return response.json(result)
   }
 }
+
+export default new UserController()

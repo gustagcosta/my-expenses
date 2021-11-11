@@ -1,19 +1,22 @@
 import { compare } from "bcryptjs"
 import { sign } from "jsonwebtoken"
-import { UserRepository } from "../repositories"
+import { hash } from "bcryptjs"
+import { User } from "../models/User"
+import { validateEmail } from "../utils/validateEmail"
+import { db } from "../database/db"
 
 type LoginRequest = {
   email: string
   password: string
 }
 
-export class LoginService {
-  async execute({ email, password }: LoginRequest): Promise<object | Error> {
+class SessionService {
+  async login({ email, password }: LoginRequest): Promise<object | Error> {
     if ([email, password].some((i) => i == undefined || i == null)) {
       return new Error("Missing data")
     }
 
-    const user = await UserRepository().where("email", "=", email).first()
+    const user = await db("users").where("email", "=", email).first()
 
     if (!user) {
       return new Error("User does not exists")
@@ -25,7 +28,7 @@ export class LoginService {
       return new Error("Invalid credetials")
     }
 
-    if(!process.env.SECRET_JWT){
+    if (!process.env.SECRET_JWT) {
       return new Error("No secret token found")
     }
 
@@ -36,3 +39,5 @@ export class LoginService {
     return { token }
   }
 }
+
+export default new SessionService()
