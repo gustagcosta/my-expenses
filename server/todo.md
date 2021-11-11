@@ -1,5 +1,5 @@
 [x] create roles for users
 [x] update middlewares
-[] tests
+[x] tests
 [] create bills methods resource
 [] get ready for deployment
