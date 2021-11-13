@@ -24,14 +24,15 @@ const configs: IKnexConfig = {
   production: {
     client: "pg",
     connection: {
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_URL,
+      ssl: true,
     },
     useNullAsDefault: true,
     pool: { min: 0, max: 10 },
     migrations: {
       tableName: "migrations",
     },
-  }
+  },
 }
 
 export default configs
