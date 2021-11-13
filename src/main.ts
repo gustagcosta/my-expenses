@@ -13,8 +13,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", routes)
 
-app.use(notFound);
-app.use(errorHandler);
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(3333, () => {
   console.log("server running...")

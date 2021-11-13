@@ -1,21 +1,17 @@
-import { compare } from "bcryptjs"
-import { sign } from "jsonwebtoken"
-import { hash } from "bcryptjs"
-import { User } from "../models/User"
-import { validateEmail } from "../utils/validateEmail"
 import { db } from "../database/db"
 import { Bill } from "../models/Bill"
+import moment from "moment"
 
 type BillStoreRequestDTO = {
   description: string
-  expire_date: Date
+  expire_date: string
   value: number
   userId: string
 }
 
 type BillUpdateRequestDTO = {
   description: string
-  expire_date: Date
+  expire_date: string
   value: number
   userId: string
   id: string
@@ -24,7 +20,7 @@ type BillUpdateRequestDTO = {
 class BillService {
   async index(userId: string): Promise<object | Error> {
     try {
-      return await db("bills").select("*").where("id_user", "=", userId)
+      return await db("bills").select("*").where("user_id", "=", userId)
     } catch (error) {
       console.error(error)
       return new Error("Error while trying to load bills")
@@ -36,7 +32,7 @@ class BillService {
       const bill = await db("bills")
         .select("*")
         .where("id", "=", id)
-        .where("id_user", "=", userId)
+        .where("user_id", "=", userId)
         .first()
 
       if (!bill) {
@@ -63,6 +59,14 @@ class BillService {
 
       if (value < 0) {
         return new Error("Value field must be greater than 0")
+      }
+
+      if (!moment(expire_date, "YYYYMMDD", true).isValid()) {
+        return new Error("Expire date field must is invalid")
+      }
+
+      if (!Number(value)) {
+        return new Error("value field must be a number")
       }
 
       const bill = new Bill()
@@ -100,6 +104,14 @@ class BillService {
 
       if (!bill) {
         return new Error("Bill with this id not found")
+      }
+
+      if (!moment(expire_date, "YYYYMMDD", true).isValid()) {
+        return new Error("Expire date field must is invalid")
+      }
+
+      if (!Number(value)) {
+        return new Error("value field must be a number")
       }
 
       bill.description = description
