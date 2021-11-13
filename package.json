@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon src/main.ts",
     "build": "tsc --project ./",
-    "start": "node dist/main.js",
+    "start": "node build/main.js",
     "heroku-postbuild": "yarn build",
     "knex": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts"
   },
