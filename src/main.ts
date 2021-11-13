@@ -16,6 +16,8 @@ app.use("/api/v1", routes)
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(3333 || process.env.PORT, () => {
-  console.log("server running...")
+const PORT = process.env.PORT || 3333
+
+app.listen(PORT, () => {
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 })
