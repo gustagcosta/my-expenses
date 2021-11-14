@@ -100,7 +100,11 @@ class BillService {
         return new Error("Value field must be greater than 0")
       }
 
-      const bill = await db("bills").select("*").where("id", "=", id).first()
+      const bill = await db("bills")
+        .select("*")
+        .where("user_id", "=", userId)
+        .where("id", "=", id)
+        .first()
 
       if (!bill) {
         return new Error("Bill with this id not found")
@@ -114,14 +118,13 @@ class BillService {
         return new Error("value field must be a number")
       }
 
-      bill.description = description
-      bill.expire_date = expire_date
-      bill.value = value
-      bill.user_id = userId
-
-      await db("bills").update(bill)
-
-      return bill
+      await db("bills")
+        .update({
+          description,
+          expire_date,
+          value,
+        })
+        .where("id", "=", id)
     } catch (error) {
       console.error(error)
       return new Error("Error while trying to load bills")
