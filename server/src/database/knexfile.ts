@@ -7,7 +7,7 @@ interface IKnexConfig {
 
 const configs: IKnexConfig = {
   development: {
-    client: "mysql2",
+    client: "pg",
     connection: {
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),

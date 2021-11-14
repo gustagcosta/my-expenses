@@ -130,7 +130,7 @@ class BillService {
 
   async destroy(id: string): Promise<void | Error> {
     try {
-      await db("bills").del(id)
+      await db("bills").where("id", "=", id).del()
     } catch (error) {
       console.error(error)
       return new Error("Error while trying to load bills")
