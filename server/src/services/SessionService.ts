@@ -34,7 +34,7 @@ class SessionService {
         subject: user.id,
       })
   
-      return { token }
+      return { token, user }
 
     } catch (error) {
       console.error(error)
