@@ -38,12 +38,14 @@ class SessionService {
       delete user.created_at;
       delete user.updated_at;
 
-      const roles = await db.raw(
+      const queryResult = await db.raw(
         `select roles.name from users_roles, roles where 
         user_id = '${user.id}' and users_roles.role_id = roles.id;`
       );
 
-      user.roles = roles.rows.map((r: any) => r.name);
+      const roles = queryResult.rows ? queryResult.rows : queryResult[0];
+
+      user.roles = roles.map((r: any) => r.name);
 
       return { token, user };
     } catch (error) {

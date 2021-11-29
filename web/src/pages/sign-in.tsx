@@ -9,8 +9,6 @@ export default function SignIn(props) {
   const { register, handleSubmit } = useForm()
   const { signIn } = useContext(AuthContext)
 
-  console.log({ props })
-
   async function handleSignIn(data: any) {
     try {
       await signIn(data)
