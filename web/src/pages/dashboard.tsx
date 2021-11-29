@@ -8,7 +8,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      Router.push('/login')
+      Router.push('/sign-in')
     }
   }, [])
 

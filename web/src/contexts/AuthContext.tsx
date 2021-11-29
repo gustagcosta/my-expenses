@@ -32,18 +32,22 @@ export function AuthProvider({ children }) {
   }, [])
 
   async function signIn({ email, password }: SignInData) {
-    const response = await api.post(`/api/v1/login`, { email, password })
+    try {
+      const response = await api.post(`/api/v1/login`, { email, password })
 
-    const { user, token } = response.data
+      const { user, token } = response.data
 
-    api.defaults.headers['Authorization'] = `Bearer ${token}`
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
 
-    window.localStorage.setItem('USER', JSON.stringify(user))
-    window.localStorage.setItem('TOKEN_KEY', token)
+      window.localStorage.setItem('USER', JSON.stringify(user))
+      window.localStorage.setItem('TOKEN_KEY', token)
 
-    setUser(user)
+      setUser(user)
 
-    Router.push('/')
+      Router.push('/')
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   function logout() {

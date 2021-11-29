@@ -52,20 +52,23 @@ const Layout = ({ children, title = 'My Expenses' }: Props) => {
             )}
 
             {!isAuthenticated && (
+              <>
               <li className='mr-6'>
-                <Link href='/login'>
-                  <a className='text-blue-500 hover:text-blue-800'>Login</a>
+                <Link href='/sign-in'>
+                  <a className='text-blue-500 hover:text-blue-800'>Sign in</a>
                 </Link>
               </li>
+              <li className='mr-6'>
+              <Link href='/sign-up'>
+                <a className='text-blue-500 hover:text-blue-800'>Sign up</a>
+              </Link>
+            </li>
+            </>
             )}
           </ul>
         </nav>
       </header>
       {children}
-      <footer>
-        <hr />
-        <span>I'm here to stay (Footer)</span>
-      </footer>
     </div>
   )
 }
