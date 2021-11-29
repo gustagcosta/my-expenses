@@ -1,6 +1,5 @@
 import React, { ReactNode, useContext, useEffect } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 
 type Props = {
@@ -8,45 +7,41 @@ type Props = {
   title?: string
 }
 
-const Layout = ({ children, title = 'My Expenses' }: Props) => {
-  const { user, isAuthenticated, logout } = useContext(AuthContext)
+const Layout = ({ children, title }: Props) => {
+  const { isAuthenticated, logout } = useContext(AuthContext)
+  const history = useHistory()
+
+  document.title = 'My Expenses ' + title
 
   const handleLogout = () => {
     logout()
+    history.push('/sign-in')
   }
 
   return (
     <div>
-      <Head>
-        <title>My Expenses - {title}</title>
-        <meta charSet='utf-8' />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
       <header>
         <nav>
           <ul className='flex justify-center border-b p-4'>
             {isAuthenticated && (
-              <>
-                <li className='mr-6'>
-                  <button
-                    onClick={handleLogout}
-                    className='text-blue-500 hover:text-blue-800'
-                  >
-                    Logout
-                  </button>
-                </li>
-              </>
+              <li className='mr-6'>
+                <button
+                  onClick={handleLogout}
+                  className='text-blue-500 hover:text-blue-800'
+                >
+                  Logout
+                </button>
+              </li>
             )}
-
             {!isAuthenticated && (
               <>
                 <li className='mr-6'>
-                  <Link href='/sign-in'>
+                  <Link to='/sign-in'>
                     <a className='text-blue-500 hover:text-blue-800'>Sign in</a>
                   </Link>
                 </li>
                 <li className='mr-6'>
-                  <Link href='/sign-up'>
+                  <Link to='/sign-up'>
                     <a className='text-blue-500 hover:text-blue-800'>Sign up</a>
                   </Link>
                 </li>

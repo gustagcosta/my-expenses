@@ -1,14 +1,14 @@
-import Head from 'next/head'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useForm } from 'react-hook-form'
 import { useContext } from 'react'
 import Layout from '../components/Layout'
 import { AuthContext } from '../contexts/AuthContext'
 import { api } from '../services/api'
-import Router from 'next/router'
+import { useHistory } from 'react-router'
 
 export default function SignUp() {
   const { register, handleSubmit } = useForm()
+  const history = useHistory()
 
   async function handleSignUp({ name, email, password }) {
     try {
@@ -18,12 +18,12 @@ export default function SignUp() {
         password,
       })
 
-      if (confirm('register success, redirect to login?')) {
-        Router.push('/sign-in')
+      if (window.confirm('register success, redirect to login?')) {
+        history.push('/sign-in')
       }
     } catch (error) {
       console.error(error)
-      alert('error when trying perform the action')
+      window.alert('error when trying perform the action')
     }
   }
 

@@ -1,8 +1,15 @@
 import { createContext, useEffect, useState } from 'react'
-import Router from 'next/router'
+import { AxiosResponse } from 'axios'
 
 import { api } from '../services/api'
 import { User } from '../interfaces'
+import {
+  clearStorage,
+  getToken,
+  getUser,
+  storeToken,
+  storeUser,
+} from '../services/storage'
 
 type SignInData = {
   email: string
@@ -16,6 +23,11 @@ type AuthContextType = {
   logout: () => void
 }
 
+type SignInResponse = {
+  token: string
+  user: User
+}
+
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }) {
@@ -24,39 +36,39 @@ export function AuthProvider({ children }) {
   let isAuthenticated = !!user
 
   useEffect(() => {
-    const token = window.localStorage.getItem('TOKEN_KEY')
-    const user = JSON.parse(window.localStorage.getItem('USER'))
+    const token = getToken()
+    const user = getUser()
 
     if (token) {
-      window.localStorage.setItem('TOKEN_KEY', token)
+      storeToken(token)
       setUser(user)
     }
   }, [])
 
   async function signIn({ email, password }: SignInData) {
     try {
-      const response = await api.post(`/api/v1/login`, { email, password })
+      const response: AxiosResponse<SignInResponse> = await api.post(
+        `/api/v1/login`,
+        {
+          email,
+          password,
+        }
+      )
 
       const { user, token } = response.data
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-      window.localStorage.setItem('USER', JSON.stringify(user))
-      window.localStorage.setItem('TOKEN_KEY', token)
+      storeUser(user)
+      storeToken(token)
 
       setUser(user)
-
-      Router.push('/')
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error as string)
     }
   }
 
   function logout() {
-    window.localStorage.setItem('USER', null)
-    window.localStorage.setItem('TOKEN_KEY', null)
+    clearStorage()
     setUser(null)
-    Router.push('/sign-in')
   }
 
   return (

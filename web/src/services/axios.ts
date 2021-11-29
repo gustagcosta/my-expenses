@@ -1,17 +1,18 @@
 import axios from 'axios'
+import { getToken } from './storage'
 
 export function getAPIClient(ctx?: any) {
-  if (typeof window !== 'undefined') {
-    const token = window.localStorage.getItem('TOKEN_KEY')
+  const token = getToken()
 
-    const api = axios.create({
-      baseURL: 'http://localhost:3333',
-    })
+  const api = axios.create({
+    baseURL: 'http://localhost:3333',
+  })
 
-    if (token) {
+  if (token) {
+    if (api.defaults.headers != undefined) {
       api.defaults.headers['Authorization'] = `Bearer ${token}`
     }
-
-    return api
   }
+  
+  return api
 }
