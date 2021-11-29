@@ -24,22 +24,9 @@ const Layout = ({ children, title = 'My Expenses' }: Props) => {
       </Head>
       <header>
         <nav>
-          <ul className='flex border-b p-4'>
-            <li className='mr-6'>
-              <Link href='/'>
-                <a className='text-blue-500 hover:text-blue-800'>Home</a>
-              </Link>
-            </li>
-
+          <ul className='flex justify-center border-b p-4'>
             {isAuthenticated && (
               <>
-                <li className='mr-6'>
-                  <Link href='/dashboard'>
-                    <a className='text-blue-500 hover:text-blue-800'>
-                      Dashboard
-                    </a>
-                  </Link>
-                </li>
                 <li className='mr-6'>
                   <button
                     onClick={handleLogout}
@@ -53,22 +40,22 @@ const Layout = ({ children, title = 'My Expenses' }: Props) => {
 
             {!isAuthenticated && (
               <>
-              <li className='mr-6'>
-                <Link href='/sign-in'>
-                  <a className='text-blue-500 hover:text-blue-800'>Sign in</a>
-                </Link>
-              </li>
-              <li className='mr-6'>
-              <Link href='/sign-up'>
-                <a className='text-blue-500 hover:text-blue-800'>Sign up</a>
-              </Link>
-            </li>
-            </>
+                <li className='mr-6'>
+                  <Link href='/sign-in'>
+                    <a className='text-blue-500 hover:text-blue-800'>Sign in</a>
+                  </Link>
+                </li>
+                <li className='mr-6'>
+                  <Link href='/sign-up'>
+                    <a className='text-blue-500 hover:text-blue-800'>Sign up</a>
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
         </nav>
       </header>
-      {children}
+      <main className='container mx-auto'>{children}</main>
     </div>
   )
 }

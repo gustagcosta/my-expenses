@@ -1,10 +1,13 @@
+import { useContext } from 'react'
 import Layout from '../components/Layout'
+import { AuthContext } from '../contexts/AuthContext'
 
 const IndexPage = () => {
+  const { user } = useContext(AuthContext)
+
   return (
     <Layout title='Home'>
-      <h1>Hello Next.js 👋</h1>
-      <p>This is the home page</p>
+      <p>Aqui vai ter uma listagem com todas as contas a pagar do amigo</p>
     </Layout>
   )
 }

@@ -20,7 +20,6 @@ export default function SignIn(props) {
 
   return (
     <Layout title={'Login'}>
-      <div className='container mx-auto'>
         <div className='text-2xl mt-3'>Sign in</div>
         <form className='mt-8 space-y-6' onSubmit={handleSubmit(handleSignIn)}>
           <input type='hidden' name='remember' defaultValue='true' />
@@ -72,7 +71,6 @@ export default function SignIn(props) {
             </button>
           </div>
         </form>
-      </div>
     </Layout>
   )
 }

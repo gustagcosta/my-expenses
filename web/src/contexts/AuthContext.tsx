@@ -21,13 +21,15 @@ export const AuthContext = createContext({} as AuthContextType)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(null)
 
-  const isAuthenticated = !!user
+  let isAuthenticated = !!user
 
   useEffect(() => {
     const token = window.localStorage.getItem('TOKEN_KEY')
+    const user = JSON.parse(window.localStorage.getItem('USER'))
 
     if (token) {
       window.localStorage.setItem('TOKEN_KEY', token)
+      setUser(user)
     }
   }, [])
 
@@ -54,8 +56,7 @@ export function AuthProvider({ children }) {
     window.localStorage.setItem('USER', null)
     window.localStorage.setItem('TOKEN_KEY', null)
     setUser(null)
-
-    Router.push('/')
+    Router.push('/sign-in')
   }
 
   return (

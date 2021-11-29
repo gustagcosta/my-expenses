@@ -33,6 +33,18 @@ const configs: IKnexConfig = {
       tableName: "migrations",
     },
   },
+  pglocal: {
+    client: "pg",
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: false,
+    },
+    useNullAsDefault: true,
+    pool: { min: 0, max: 10 },
+    migrations: {
+      tableName: "migrations",
+    },
+  }
 }
 
 export default configs
