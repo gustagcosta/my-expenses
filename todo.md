@@ -4,10 +4,13 @@
 - [x] setup db production
 - [x] setup cd script
 - [x] deployment backend
-- [] start frontend
-- [] login and register pages
+- [x] start frontend
+- [x] login and register pages
+- [x] integrate backend and frontend
+- [x] change roles handle
+- [] custom errors in controllers
+- [] handle erros in frontend
 - [] bills page
-- [] integrate backend and frontend
 - [] send token when register users
 - [] forgot password feature
 - [] confirm email feature

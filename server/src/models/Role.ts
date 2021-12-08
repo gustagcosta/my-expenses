@@ -1,10 +1,10 @@
-import { BaseEntity } from "./BaseEntity"
+import { BaseEntity } from "./BaseEntity";
 
 export class Role extends BaseEntity {
-  name: string
+  name: string;
 
   constructor(name: string) {
-    super()
-    this.name = name
+    super();
+    this.name = name;
   }
 }

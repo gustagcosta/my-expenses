@@ -14,7 +14,16 @@ class SessionService {
         return new Error("Missing data");
       }
 
-      const user = await db("users").where("email", "=", email).first();
+      const queryResult = await db.raw(
+        `
+        select u.id, u.name, u.email, u.password, r.name as role 
+        from users u, roles r 
+        where r.id = u.role_id
+        and u.email = '${email}'
+      `
+      );
+
+      const user = queryResult.rows[0]
 
       if (!user) {
         return new Error("User does not exists");
@@ -35,17 +44,6 @@ class SessionService {
       });
 
       delete user.password;
-      delete user.created_at;
-      delete user.updated_at;
-
-      const queryResult = await db.raw(
-        `select roles.name from users_roles, roles where 
-        user_id = '${user.id}' and users_roles.role_id = roles.id;`
-      );
-
-      const roles = queryResult.rows ? queryResult.rows : queryResult[0];
-
-      user.roles = roles.map((r: any) => r.name);
 
       return { token, user };
     } catch (error) {

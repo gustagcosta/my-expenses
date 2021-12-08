@@ -1,58 +1,53 @@
-import { hash } from "bcryptjs"
-import { User } from "../models/User"
-import { validateEmail } from "../utils/validateEmail"
-import { db } from "../database/db"
+import { hash } from "bcryptjs";
+import { User } from "../models/User";
+import { validateEmail } from "../utils/validateEmail";
+import { db } from "../database/db";
 
 type UserRequest = {
-  name: string
-  email: string
-  password: string
-}
+  name: string;
+  email: string;
+  password: string;
+};
 
 class UserService {
   async store({ name, email, password }: UserRequest): Promise<User | Error> {
     try {
       if ([name, email, password].some((i) => i == undefined || i == null)) {
-        return new Error("Missing data")
+        return new Error("Missing data");
       }
 
-      const existUser = await db("users").where("email", "=", email).first()
+      const existUser = await db("users").where("email", "=", email).first();
 
       if (existUser) {
-        return new Error("User already exists")
+        return new Error("User already exists");
       }
 
       if (!validateEmail(email)) {
-        return new Error("Email is not valid")
+        return new Error("Email is not valid");
       }
 
       if (name.length <= 3) {
-        return new Error("Name field must have more than 3 caracteres")
+        return new Error("Name field must have more than 3 caracteres");
       }
 
       if (password.length <= 3) {
-        return new Error("Password field must have more than 3 caracteres")
+        return new Error("Password field must have more than 3 caracteres");
       }
 
-      const passwordHash = await hash(password, 8)
+      const passwordHash = await hash(password, 8);
 
-      const newUser = new User(name, email, passwordHash)
+      const userRole = await db("roles").where("name", "=", "user").first();
 
-      await db("users").insert(newUser)
+      const newUser = new User(name, email, passwordHash, userRole.id);
 
-      const userRole = await db("roles").where("name", "=", "user").first()
+      await db("users").insert(newUser);
 
-      await db("users_roles").insert({
-        user_id: newUser.id,
-        role_id: userRole.id,
-      })
-
-      return newUser
+      return newUser;
     } catch (error) {
-      console.error(error)
-      return new Error("Error trying to register user")
+      console.error(error);
+      return new Error("Error trying to register user");
     }
   }
 }
 
-export default new UserService()
+export default new UserService();

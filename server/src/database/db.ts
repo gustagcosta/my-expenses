@@ -1,8 +1,6 @@
-import knex from "knex"
-import configs from "./knexfile"
+import knex from "knex";
+import config from "./knexfile";
 
-const config = configs[process.env.DB]
+const db = knex(config);
 
-const db = knex(config)
-
-export { db }
+export { db };
