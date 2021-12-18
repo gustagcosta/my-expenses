@@ -1,11 +1,13 @@
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useForm } from 'react-hook-form'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Layout from '../components/Layout'
 import { AuthContext } from '../contexts/AuthContext'
 import { useHistory } from 'react-router'
+import ErrorAlert from '../components/ErrorAlert'
 
 export default function SignIn(props) {
+  const [error, setError] = useState('')
   const { register, handleSubmit } = useForm()
   const { signIn } = useContext(AuthContext)
   const history = useHistory()
@@ -15,8 +17,8 @@ export default function SignIn(props) {
       await signIn(data)
       history.push('/')
     } catch (error) {
-      console.log(error)
-      window.alert('error when trying to perform action')
+      console.error(error)
+      setError(error)
     }
   }
 
@@ -57,7 +59,7 @@ export default function SignIn(props) {
             />
           </div>
         </div>
-
+        <div>{error && <ErrorAlert error={error} />}</div>
         <div>
           <button
             type='submit'

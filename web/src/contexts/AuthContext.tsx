@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { AxiosResponse } from 'axios'
 
-import { api } from '../services/api'
+import api from '../services/api'
 import { User } from '../interfaces'
 import {
   clearStorage,
@@ -47,22 +47,24 @@ export function AuthProvider({ children }) {
 
   async function signIn({ email, password }: SignInData) {
     try {
-      const response: AxiosResponse<SignInResponse> = await api.post(
-        `/api/v1/login`,
-        {
-          email,
-          password,
-        }
-      )
+      const response = await api(`/api/v1/login`, 'POST', {
+        email,
+        password,
+      })
 
-      const { user, token } = response.data
+      if (response.status == 200) {
+        const { user, token } = await response.json()
 
-      storeUser(user)
-      storeToken(token)
+        storeUser(user)
+        storeToken(token)
 
-      setUser(user)
+        setUser(user)
+      } else {
+        const error = await response.json()
+        throw error.message
+      }
     } catch (error) {
-      throw new Error(error as string)
+      throw error
     }
   }
 

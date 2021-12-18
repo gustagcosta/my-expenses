@@ -7,7 +7,9 @@ class BillController {
     const result = await BillService.index(request.userId);
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);
@@ -17,7 +19,9 @@ class BillController {
     const result = await BillService.show(request.params.id, request.userId);
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);
@@ -36,7 +40,9 @@ class BillController {
     });
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);
@@ -56,7 +62,9 @@ class BillController {
     });
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);
@@ -66,7 +74,9 @@ class BillController {
     const result = await BillService.destroy(request.params.id);
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);

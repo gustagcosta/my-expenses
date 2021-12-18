@@ -12,7 +12,9 @@ class SessionController {
     });
 
     if (result instanceof CustomError) {
-      return response.status(result.statusCode).json(result.message);
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
     }
 
     return response.json(result);

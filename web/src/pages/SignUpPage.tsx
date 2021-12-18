@@ -1,29 +1,32 @@
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useForm } from 'react-hook-form'
-import { useContext } from 'react'
+import { useState } from 'react'
 import Layout from '../components/Layout'
-import { AuthContext } from '../contexts/AuthContext'
-import { api } from '../services/api'
 import { useHistory } from 'react-router'
+import ErrorAlert from '../components/ErrorAlert'
+import api from '../services/api'
 
 export default function SignUp() {
+  const [error, setError] = useState('')
   const { register, handleSubmit } = useForm()
   const history = useHistory()
 
   async function handleSignUp({ name, email, password }) {
-    try {
-      const response = await api.post(`/api/v1/register`, {
-        name,
-        email,
-        password,
-      })
+    setError('')
 
+    const response = await api(`/api/v1/register`, 'POST', {
+      name,
+      email,
+      password,
+    })
+
+    if (response.status == 200) {
       if (window.confirm('register success, redirect to login?')) {
         history.push('/sign-in')
       }
-    } catch (error) {
-      console.error(error)
-      window.alert('error when trying perform the action')
+    } else {
+      const error = await response.json()
+      setError(error.message)
     }
   }
 
@@ -80,7 +83,7 @@ export default function SignUp() {
               />
             </div>
           </div>
-
+          <div>{error && <ErrorAlert error={error} />}</div>
           <div>
             <button
               type='submit'

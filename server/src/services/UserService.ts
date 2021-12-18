@@ -17,6 +17,12 @@ class UserService {
     password
   }: UserRequest): Promise<User | CustomError> {
     try {
+      console.log({
+        name,
+        email,
+        password
+      });
+
       if ([name, email, password].some((i) => i == undefined || i == null)) {
         return new CustomError(400, "Missing data");
       }

@@ -9,7 +9,7 @@
 - [x] integrate backend and frontend
 - [x] change roles handle
 - [x] custom errors in controllers
-- [] handle custom erros in frontend
+- [x] handle custom erros in frontend
 - [] bills page component
 - [] send token when register users
 - [] forgot password feature
