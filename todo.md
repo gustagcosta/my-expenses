@@ -8,9 +8,11 @@
 - [x] login and register pages
 - [x] integrate backend and frontend
 - [x] change roles handle
-- [] custom errors in controllers
-- [] handle erros in frontend
-- [] bills page
+- [x] custom errors in controllers
+- [] handle custom erros in frontend
+- [] bills page component
 - [] send token when register users
 - [] forgot password feature
 - [] confirm email feature
+- [] user management by admin
+- [] reports

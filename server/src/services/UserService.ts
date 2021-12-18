@@ -2,6 +2,7 @@ import { hash } from "bcryptjs";
 import { User } from "../models/User";
 import { validateEmail } from "../utils/validateEmail";
 import { db } from "../database/db";
+import { CustomError } from "../utils/customError";
 
 type UserRequest = {
   name: string;
@@ -10,28 +11,38 @@ type UserRequest = {
 };
 
 class UserService {
-  async store({ name, email, password }: UserRequest): Promise<User | Error> {
+  async store({
+    name,
+    email,
+    password
+  }: UserRequest): Promise<User | CustomError> {
     try {
       if ([name, email, password].some((i) => i == undefined || i == null)) {
-        return new Error("Missing data");
+        return new CustomError(400, "Missing data");
       }
 
       const existUser = await db("users").where("email", "=", email).first();
 
       if (existUser) {
-        return new Error("User already exists");
+        return new CustomError(409, "User already exists");
       }
 
       if (!validateEmail(email)) {
-        return new Error("Email is not valid");
+        return new CustomError(400, "Email is not valid");
       }
 
       if (name.length <= 3) {
-        return new Error("Name field must have more than 3 caracteres");
+        return new CustomError(
+          400,
+          "Name field must have more than 3 caracteres"
+        );
       }
 
       if (password.length <= 3) {
-        return new Error("Password field must have more than 3 caracteres");
+        return new CustomError(
+          400,
+          "Password field must have more than 3 caracteres"
+        );
       }
 
       const passwordHash = await hash(password, 8);
@@ -45,7 +56,7 @@ class UserService {
       return newUser;
     } catch (error) {
       console.error(error);
-      return new Error("Error trying to register user");
+      return new CustomError(500, "Error trying to register user");
     }
   }
 }

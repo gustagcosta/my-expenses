@@ -1,21 +1,22 @@
-import { Request, Response } from "express"
-import sessionService from "../services/SessionService"
+import { Request, Response } from "express";
+import sessionService from "../services/SessionService";
+import { CustomError } from "../utils/customError";
 
 class SessionController {
   async login(request: Request, response: Response) {
-    const { email, password } = request.body
+    const { email, password } = request.body;
 
     const result = await sessionService.login({
       email,
-      password,
-    })
+      password
+    });
 
-    if (result instanceof Error) {
-      return response.status(400).json(result.message)
+    if (result instanceof CustomError) {
+      return response.status(result.statusCode).json(result.message);
     }
 
-    return response.json(result)
+    return response.json(result);
   }
 }
 
-export default new SessionController()
+export default new SessionController();

@@ -1,8 +1,8 @@
 export class CustomError {
-  statusCode: Number;
-  message: String;
+  statusCode: number;
+  message: string;
 
-  constructor(statusCode: Number, message: String) {
+  constructor(statusCode: number, message: string) {
     this.statusCode = statusCode;
     this.message = message;
   }

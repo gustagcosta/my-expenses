@@ -1,17 +1,26 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { db } from "../database/db";
+import { CustomError } from "../utils/customError";
 
 type LoginRequest = {
   email: string;
   password: string;
 };
 
+type ResponseObject = {
+  token: string;
+  user: object;
+};
+
 class SessionService {
-  async login({ email, password }: LoginRequest): Promise<object | Error> {
+  async login({
+    email,
+    password
+  }: LoginRequest): Promise<ResponseObject | CustomError> {
     try {
       if ([email, password].some((i) => i == undefined || i == null)) {
-        return new Error("Missing data");
+        return new CustomError(400, "Missing data");
       }
 
       const queryResult = await db.raw(
@@ -23,20 +32,20 @@ class SessionService {
       `
       );
 
-      const user = queryResult.rows[0]
+      const user = queryResult.rows[0];
 
       if (!user) {
-        return new Error("User does not exists");
+        return new CustomError(404, "User does not exists");
       }
 
       const passwordMatch = await compare(password, user.password);
 
       if (!passwordMatch) {
-        return new Error("Invalid credetials");
+        return new CustomError(401, "Invalid credetials");
       }
 
       if (!process.env.SECRET_JWT) {
-        return new Error("No secret token found");
+        return new CustomError(500, "No secret token found");
       }
 
       const token = sign({}, process.env.SECRET_JWT, {
@@ -47,8 +56,7 @@ class SessionService {
 
       return { token, user };
     } catch (error) {
-      console.error(error);
-      return new Error("Error trying to login");
+      return new CustomError(500, "Unknown error");
     }
   }
 }
