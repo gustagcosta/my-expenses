@@ -10,7 +10,7 @@
 - [x] change roles handle
 - [x] custom errors in controllers
 - [x] handle custom erros in frontend
-- [] fix login logout navigation
+- [x] fix login logout navigation
 - [] use frontend framework with components
 - [] do use toast menu with actions
 - [] make the bills page

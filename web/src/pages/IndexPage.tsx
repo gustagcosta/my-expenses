@@ -1,18 +1,6 @@
-import { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router'
 import Layout from '../components/Layout'
-import { AuthContext } from '../contexts/AuthContext'
 
-const IndexPage = () => {
-  const { isAuthenticated } = useContext(AuthContext)
-  const history = useHistory()
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      history.push('/sign-in')
-    }
-  }, [])
-
+export default function IndexPage() {
   return (
     <Layout title='Index'>
       <br />
@@ -37,5 +25,3 @@ const IndexPage = () => {
     </Layout>
   )
 }
-
-export default IndexPage

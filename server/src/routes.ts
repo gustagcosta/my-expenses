@@ -8,6 +8,7 @@ const routes = Router()
 
 routes.post("/register", UserController.store)
 routes.post("/login", SessionController.login)
+routes.get("/profile", UserController.profile)
 
 routes.get("/bills", authentication(), BillController.index)
 routes.get("/bills/:id", authentication(), BillController.show)

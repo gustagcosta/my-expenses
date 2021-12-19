@@ -62,7 +62,27 @@ class UserService {
       return newUser;
     } catch (error) {
       console.error(error);
-      return new CustomError(500, "Error trying to register user");
+      return new CustomError(500, "Unknown error");
+    }
+  }
+
+  async profile(id: string): Promise<object | CustomError> {
+    try {
+      const query = await db.raw(
+        `
+        select u.id, u.name, u.email, r.name as role 
+        from users u, roles r 
+        where r.id = u.role_id
+        and u.id = '${id}'
+      `
+      );
+
+      console.log(query);
+
+      return { salve: true };
+    } catch (error) {
+      console.error(error);
+      return new CustomError(500, "Unknown error");
     }
   }
 }

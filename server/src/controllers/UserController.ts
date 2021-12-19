@@ -20,6 +20,18 @@ class UserController {
 
     return response.json(result);
   }
+
+  async profile(request: Request, response: Response) {
+    const result = await userService.profile(request.userId);
+
+    if (result instanceof CustomError) {
+      return response
+        .status(result.statusCode)
+        .json({ message: result.message });
+    }
+
+    return response.json(result);
+  }
 }
 
 export default new UserController();

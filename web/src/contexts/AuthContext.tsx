@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from 'react'
-import { AxiosResponse } from 'axios'
 import { api } from '../services/api'
 import { User } from '../interfaces'
 import {
@@ -16,33 +15,19 @@ type SignInData = {
 }
 
 type AuthContextType = {
-  isAuthenticated: boolean
   user: User
   signIn: (data: SignInData) => Promise<void>
   logout: () => void
-}
-
-type SignInResponse = {
-  token: string
-  user: User
+  isAuthenticated: boolean
 }
 
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState<User | null>(null)
-
-  let isAuthenticated = !!user
-
-  useEffect(() => {
-    const token = getToken()
-    const user = getUser()
-
-    if (token) {
-      storeToken(token)
-      setUser(user)
-    }
-  }, [])
+  const [user, setUser] = useState<User | null>(getUser())
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(
+    typeof getToken() !== 'undefined'
+  )
 
   async function signIn({ email, password }: SignInData) {
     try {
@@ -51,13 +36,14 @@ export function AuthProvider({ children }) {
         password,
       })
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         const { user, token } = await response.json()
 
         storeUser(user)
         storeToken(token)
 
         setUser(user)
+        setIsAuthenticated(typeof token !== 'undefined')
       } else {
         const error = await response.json()
         throw error.message
@@ -70,10 +56,18 @@ export function AuthProvider({ children }) {
   function logout() {
     clearStorage()
     setUser(null)
+    setIsAuthenticated(false)
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        signIn,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
