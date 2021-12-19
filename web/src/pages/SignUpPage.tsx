@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Layout from '../components/Layout'
 import { useHistory } from 'react-router'
 import ErrorAlert from '../components/ErrorAlert'
-import api from '../services/api'
+import { api } from '../services/api'
 
 export default function SignUp() {
   const [error, setError] = useState('')

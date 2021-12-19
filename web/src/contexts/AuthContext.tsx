@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { AxiosResponse } from 'axios'
-
-import api from '../services/api'
+import { api } from '../services/api'
 import { User } from '../interfaces'
 import {
   clearStorage,

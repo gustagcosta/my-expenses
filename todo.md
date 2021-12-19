@@ -10,9 +10,13 @@
 - [x] change roles handle
 - [x] custom errors in controllers
 - [x] handle custom erros in frontend
-- [] bills page component
+- [] fix login logout navigation
+- [] use frontend framework with components
+- [] do use toast menu with actions
+- [] make the bills page
 - [] send token when register users
 - [] forgot password feature
 - [] confirm email feature
 - [] user management by admin
+- [] update profile feature
 - [] reports

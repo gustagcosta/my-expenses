@@ -21,4 +21,4 @@ async function api(url: string, method: string, body: object) {
   return response
 }
 
-export default api
+export { api }
