@@ -19,4 +19,7 @@
 - [] confirm email feature
 - [] user management by admin
 - [] update profile feature
-- [] reports
+- [] reports?
+- [] prepare build with docker
+- [] manual deploy
+- [] ci/cd with github actions
