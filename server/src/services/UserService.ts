@@ -17,11 +17,6 @@ class UserService {
     password
   }: UserRequest): Promise<User | CustomError> {
     try {
-      console.log({
-        name,
-        email,
-        password
-      });
 
       if ([name, email, password].some((i) => i == undefined || i == null)) {
         return new CustomError(400, "Missing data");
@@ -58,6 +53,8 @@ class UserService {
       const newUser = new User(name, email, passwordHash, userRole.id);
 
       await db("users").insert(newUser);
+
+      console.log(`Registering ${name}`)
 
       return newUser;
     } catch (error) {

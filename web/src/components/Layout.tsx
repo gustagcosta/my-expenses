@@ -94,7 +94,7 @@ const Layout = ({ children, title }: Props) => {
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              My Expenses
+              My Expenses {user && ` - ${user.name}`}
             </Typography>
             <IconButton
               size='large'
@@ -121,12 +121,12 @@ const Layout = ({ children, title }: Props) => {
               component='div'
               sx={{ flexGrow: 1 }}
             >
-              My Expenses
+              My Expenses {user && ` - ${user.name}`}
             </Typography>
           </Toolbar>
         </AppBar>
         <Fab
-        size='small'
+          size='small'
           color='primary'
           aria-label='add'
           style={{

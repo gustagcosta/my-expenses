@@ -54,6 +54,8 @@ class SessionService {
 
       delete user.password;
 
+      console.log(`Logging ${user.name}`)
+
       return { token, user };
     } catch (error) {
       return new CustomError(500, "Unknown error");

@@ -87,10 +87,10 @@ export default function SignInPage() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item>
-              <ErrorAlert error={error} />
-            </Grid>
+          <Grid width={'100%'}>
+            {error && (
+              <ErrorAlert error={error} handleClose={() => setError(null)} />
+            )}
           </Grid>
         </Box>
       </Box>

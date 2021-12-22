@@ -1,11 +1,23 @@
-const ErrorAlert = ({ error }) => {
+import { Alert, AlertColor, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
+
+const ErrorAlert = ({ type = 'error' as AlertColor, error, handleClose }) => {
   return (
-    <div
-      className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2'
-      role='alert'
+    <Alert
+      action={
+        <IconButton
+          aria-label='close'
+          color='inherit'
+          size='small'
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize='inherit' />
+        </IconButton>
+      }
+      severity={type}
     >
-      <span className='block sm:inline'>{error}</span>
-    </div>
+      {error}
+    </Alert>
   )
 }
 

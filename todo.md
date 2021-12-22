@@ -13,12 +13,12 @@
 - [x] fix login logout navigation
 - [x] use frontend framework with components
 - [x] do use toast menu with actions
-- [] improve alert
-- [] send token when register users
-- [] make the bills page
+- [x] improve alert
+- [x] send token when register users
 - [] prepare build with docker
 - [] manual deploy
 - [] ci/cd with github actions
+- [] make the bills page
 - [] forgot password feature
 - [] confirm email feature
 - [] user management by admin

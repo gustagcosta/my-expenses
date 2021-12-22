@@ -21,10 +21,10 @@ import ErrorAlert from '../components/ErrorAlert'
 import { api } from '../services/api'
 
 export default function SignUp() {
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
   const { register, handleSubmit } = useForm()
   const history = useHistory()
-  const { user } = useContext(AuthContext)
+  const { user, signIn } = useContext(AuthContext)
 
   useEffect(() => {
     if (user) {
@@ -42,9 +42,8 @@ export default function SignUp() {
     })
 
     if (response.status === 200) {
-      if (window.confirm('register success, redirect to login?')) {
-        history.push('/sign-in')
-      }
+      await signIn({ email, password })
+      history.push('/')
     } else {
       const error = await response.json()
       setError(error.message)
@@ -89,7 +88,6 @@ export default function SignUp() {
             {...register('email')}
           />
           <TextField
-            {...register('password')}
             margin='normal'
             required
             fullWidth
@@ -98,6 +96,7 @@ export default function SignUp() {
             type='password'
             id='password'
             autoComplete='current-password'
+            {...register('password')}
           />
           <Button
             type='submit'
@@ -107,10 +106,10 @@ export default function SignUp() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item>
-              <ErrorAlert error={error} />
-            </Grid>
+          <Grid width={'100%'}>
+            {error && (
+              <ErrorAlert error={error} handleClose={() => setError(null)} />
+            )}
           </Grid>
         </Box>
       </Box>
