@@ -11,15 +11,15 @@
 - [x] custom errors in controllers
 - [x] handle custom erros in frontend
 - [x] fix login logout navigation
-- [] use frontend framework with components
-- [] do use toast menu with actions
-- [] make the bills page
+- [x] use frontend framework with components
+- [x] do use toast menu with actions
+- [] improve alert
 - [] send token when register users
+- [] make the bills page
+- [] prepare build with docker
+- [] manual deploy
+- [] ci/cd with github actions
 - [] forgot password feature
 - [] confirm email feature
 - [] user management by admin
 - [] update profile feature
-- [] reports?
-- [] prepare build with docker
-- [] manual deploy
-- [] ci/cd with github actions

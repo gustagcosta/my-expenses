@@ -1,3 +1,4 @@
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useContext } from 'react'
 import {
   BrowserRouter as Router,
@@ -6,6 +7,8 @@ import {
   Switch,
 } from 'react-router-dom'
 import { AuthContext } from './contexts/AuthContext'
+import CssBaseline from '@mui/material/CssBaseline'
+import { AuthProvider } from './contexts/AuthContext'
 
 import IndexPage from './pages/IndexPage'
 import SignInPage from './pages/SignInPage'
@@ -14,13 +17,13 @@ import SignUpPage from './pages/SignUpPage'
 import './styles/global.css'
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { user, isAuthenticated } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? (
+        user ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -33,13 +36,23 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 export default function App() {
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  })
   return (
-    <Router>
-      <Switch>
-        <PrivateRoute path='/' component={IndexPage} exact />
-        <Route path='/sign-in' component={SignInPage} exact />
-        <Route path='/sign-up' component={SignUpPage} exact />
-      </Switch>
-    </Router>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <PrivateRoute path='/' component={IndexPage} exact />
+            <Route path='/sign-in' component={SignInPage} exact />
+            <Route path='/sign-up' component={SignUpPage} exact />
+          </Switch>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }

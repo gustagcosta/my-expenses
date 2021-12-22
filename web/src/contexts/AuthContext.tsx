@@ -18,16 +18,12 @@ type AuthContextType = {
   user: User
   signIn: (data: SignInData) => Promise<void>
   logout: () => void
-  isAuthenticated: boolean
 }
 
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getUser())
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(
-    typeof getToken() !== 'undefined'
-  )
 
   async function signIn({ email, password }: SignInData) {
     try {
@@ -43,7 +39,6 @@ export function AuthProvider({ children }) {
         storeToken(token)
 
         setUser(user)
-        setIsAuthenticated(typeof token !== 'undefined')
       } else {
         const error = await response.json()
         throw error.message
@@ -56,14 +51,12 @@ export function AuthProvider({ children }) {
   function logout() {
     clearStorage()
     setUser(null)
-    setIsAuthenticated(false)
   }
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        isAuthenticated,
         signIn,
         logout,
       }}

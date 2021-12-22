@@ -1,4 +1,17 @@
-import { LockClosedIcon } from '@heroicons/react/solid'
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
 import Layout from '../components/Layout'
@@ -6,14 +19,14 @@ import { AuthContext } from '../contexts/AuthContext'
 import { useHistory } from 'react-router'
 import ErrorAlert from '../components/ErrorAlert'
 
-export default function SignIn(props) {
+export default function SignInPage() {
   const [error, setError] = useState('')
   const { register, handleSubmit } = useForm()
-  const { signIn, isAuthenticated } = useContext(AuthContext)
+  const { signIn, user } = useContext(AuthContext)
   const history = useHistory()
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       history.push('/')
     }
   }, [])
@@ -30,57 +43,57 @@ export default function SignIn(props) {
 
   return (
     <Layout title={'Login'}>
-      <div className='text-2xl mt-3'>Sign in</div>
-      <form className='mt-8 space-y-6' onSubmit={handleSubmit(handleSignIn)}>
-        <input type='hidden' name='remember' defaultValue='true' />
-        <div className='rounded-md shadow-sm -space-y-px'>
-          <div>
-            <label htmlFor='email-address' className='sr-only'>
-              Email address
-            </label>
-            <input
-              {...register('email')}
-              id='email-address'
-              name='email'
-              type='text'
-              autoComplete='text'
-              required
-              className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-              placeholder='Email address'
-            />
-          </div>
-          <div>
-            <label htmlFor='password' className='sr-only'>
-              Password
-            </label>
-            <input
-              {...register('password')}
-              id='password'
-              name='password'
-              type='password'
-              autoComplete='current-password'
-              required
-              className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-              placeholder='Password'
-            />
-          </div>
-        </div>
-        <div>{error && <ErrorAlert error={error} />}</div>
-        <div>
-          <button
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          component='form'
+          onSubmit={handleSubmit(handleSignIn)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
+            autoFocus
+            {...register('email')}
+          />
+          <TextField
+            {...register('password')}
+            margin='normal'
+            required
+            fullWidth
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
+          />
+          <Button
             type='submit'
-            className='group relative w-1/5 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
           >
-            <span className='absolute left-0 inset-y-0 flex items-center pl-3'>
-              <LockClosedIcon
-                className='h-5 w-5 text-indigo-500 group-hover:text-indigo-400'
-                aria-hidden='true'
-              />
-            </span>
-            Sign in
-          </button>
-        </div>
-      </form>
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item>
+              <ErrorAlert error={error} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </Layout>
   )
 }
