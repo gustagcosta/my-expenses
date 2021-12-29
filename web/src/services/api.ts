@@ -1,6 +1,6 @@
 import { getToken } from './storage'
 
-async function api(url: string, method: string, body: object) {
+async function api(url: string, method: string, body: object = null) {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ async function api(url: string, method: string, body: object) {
   const response = await fetch(`${url}`, {
     headers,
     method,
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : null,
   })
 
   return response

@@ -15,14 +15,11 @@
 - [x] do use toast menu with actions
 - [x] improve alert
 - [x] send token when register users
-- [] manual deploy
-- [] certbot
-- [] system unit
-- [] script to automatize? 
-- [] prepare build with docker
-- [] ci/cd with github actions
 - [] make the bills page
 - [] forgot password feature
 - [] confirm email feature
 - [] user management by admin
 - [] update profile feature
+- [] manual deploy
+- [] script to automatize the deploy
+- [] ci/cd with github actions

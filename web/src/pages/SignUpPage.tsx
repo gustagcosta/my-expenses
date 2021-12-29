@@ -104,7 +104,7 @@ export default function SignUp() {
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid width={'100%'}>
             {error && (

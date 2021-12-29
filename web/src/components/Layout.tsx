@@ -55,12 +55,6 @@ const Layout = ({ children, title }: Props) => {
   }
 
   const authItens = [
-    <MenuItem onClick={() => console.log('need implementation')}>
-      <ListItemIcon>
-        <AccountCircleIcon />
-      </ListItemIcon>
-      Profile
-    </MenuItem>,
     <MenuItem onClick={handleLogout}>
       <ListItemIcon>
         <LogoutIcon />
@@ -159,7 +153,7 @@ const Layout = ({ children, title }: Props) => {
         {user ? authItens.map((i) => i) : publicItens.map((i) => i)}
       </Menu>
 
-      <Container component='main' maxWidth='xs'>
+      <Container component='main'>
         {children}
       </Container>
     </div>
