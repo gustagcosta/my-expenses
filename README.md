@@ -1,3 +1,3 @@
 # My Expenses App
 
-## Live Example [http://gustagcosta.com/](http://gustagcosta.com/)
+## Live Example [https://myexpenses.gustagcosta.com/](https://myexpenses.gustagcosta.com)
