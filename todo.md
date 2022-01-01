@@ -15,11 +15,12 @@
 - [x] do use toast menu with actions
 - [x] improve alert
 - [x] send token when register users
-- [] make the bills page
+- [x] make the read bills
+- [x] deploy
+- [] crud operations bills
 - [] forgot password feature
 - [] confirm email feature
 - [] user management by admin
 - [] update profile feature
-- [] manual deploy
 - [] script to automatize the deploy
 - [] ci/cd with github actions
