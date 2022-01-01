@@ -18,9 +18,6 @@
 - [x] make the read bills
 - [x] deploy
 - [] crud operations bills
-- [] forgot password feature
-- [] confirm email feature
-- [] user management by admin
 - [] update profile feature
-- [] script to automatize the deploy
+- [] user management by admin endpoints
 - [] ci/cd with github actions
