@@ -4,10 +4,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/main.ts",
-    "build": "tsc --project ./",
-    "start": "node build/main.js",
-    "heroku-postbuild": "yarn build",
-    "knex": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts"
+    "start": "tsc --project ./; node build/main.js",
+    "db": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts",
+    "migrate": "yarn db migrate:latest",
+    "seed": "yarn db seed:run"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

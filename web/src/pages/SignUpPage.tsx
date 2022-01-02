@@ -1,23 +1,12 @@
-import * as React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Button, TextField, Link, Box } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
+import { useHistory, Link as LinkRouter } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
+
+import ErrorAlert from '../components/ErrorAlert'
 import Layout from '../components/Layout'
 import { AuthContext } from '../contexts/AuthContext'
-import { useHistory } from 'react-router'
-import ErrorAlert from '../components/ErrorAlert'
 import { api } from '../services/api'
 
 export default function SignUp() {
@@ -64,7 +53,7 @@ export default function SignUp() {
           component='form'
           onSubmit={handleSubmit(handleSignUp)}
           noValidate
-          sx={{ mt: 1 }}
+          sx={isBrowser ? { mt: 1, width: '70%' } : { mt: 1, width: '90%' }}
         >
           <TextField
             margin='normal'
@@ -106,11 +95,17 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
-          <Grid width={'100%'}>
-            {error && (
-              <ErrorAlert error={error} handleClose={() => setError(null)} />
-            )}
-          </Grid>
+          <Link variant='body2'>
+            <LinkRouter
+              to='/sign-in'
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              {'Already have an account? Sign in'}
+            </LinkRouter>
+          </Link>
+          {error && (
+            <ErrorAlert error={error} handleClose={() => setError(null)} />
+          )}
         </Box>
       </Box>
     </Layout>

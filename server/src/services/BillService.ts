@@ -66,7 +66,7 @@ class BillService {
       }
 
       if (!moment(expire_date, "YYYYMMDD", true).isValid()) {
-        return new CustomError(400, "Expire date field must is invalid");
+        return new CustomError(400, "Expire date field is invalid");
       }
 
       if (!Number(value)) {
