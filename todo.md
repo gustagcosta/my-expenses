@@ -17,7 +17,7 @@
 - [x] send token when register users
 - [x] make the read bills
 - [x] deploy
-- [] crud operations bills
+- [x] crud operations bills
 - [] update profile feature
 - [] user management by admin endpoints
 - [] ci/cd with github actions
