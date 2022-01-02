@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-<<<<<<< HEAD
-=======
 // import { DataGrid } from '@mui/x-data-grid'
 import {
   Grid,
@@ -20,28 +18,10 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { format, toDate } from 'date-fns'
 
->>>>>>> new
 import Layout from '../components/Layout'
 import { AuthContext } from '../contexts/AuthContext'
-import { DataGrid } from '@mui/x-data-grid'
-import ErrorAlert from '../components/ErrorAlert'
-<<<<<<< HEAD
 import { api } from '../services/api'
-import { Grid } from '@mui/material'
-import moment from 'moment'
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 300 },
-  { field: 'description', headerName: 'Description', width: 300 },
-  { field: 'expire_date', headerName: 'Expire Date', width: 200 },
-  { field: 'value', headerName: 'Value', width: 100 },
-]
-
-export default function IndexPage() {
-  const { signIn, user } = useContext(AuthContext)
-  const history = useHistory()
-  const [rows, setRows] = useState([])
-=======
+import ErrorAlert from '../components/ErrorAlert'
 import BillDialog from '../components/BillDialog'
 import DeleteBillDialog from '../components/DeleteBillDialog'
 
@@ -50,7 +30,6 @@ export default function IndexPage() {
 
   const history = useHistory()
 
->>>>>>> new
   const [bills, setBills] = useState([])
   const [error, setError] = useState(null)
   const [newBill, setNewBill] = useState(false)
@@ -73,19 +52,7 @@ export default function IndexPage() {
 
     if (response.status === 200) {
       const bills = await response.json()
-<<<<<<< HEAD
-      const rows = bills.map((b) => {
-        return {
-          id: b.id,
-          description: b.description,
-          expire_date: moment(b.expire_date).format('DD/MM/YYYY'),
-          value: b.value,
-        }
-      })
-      setRows(rows)
-=======
       console.log(bills)
->>>>>>> new
       setBills(bills)
     } else if (response.status === 401) {
       logout()
@@ -97,24 +64,6 @@ export default function IndexPage() {
 
   return (
     <Layout title='Index'>
-<<<<<<< HEAD
-      <Grid width={'100%'}>
-        <DataGrid
-          style={{ marginTop: '15px' }}
-          rows={rows}
-          autoHeight
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-        />
-      </Grid>
-      <Grid width={'100%'}>
-        {error && (
-          <ErrorAlert error={error} handleClose={() => setError(null)} />
-        )}
-      </Grid>
-=======
       {error && <ErrorAlert error={error} handleClose={() => setError(null)} />}
       <div>
         <Button
@@ -189,7 +138,6 @@ export default function IndexPage() {
           handleClose={() => setDeleteBill(false)}
         />
       )}
->>>>>>> new
     </Layout>
   )
 }
