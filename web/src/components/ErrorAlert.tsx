@@ -1,11 +1,7 @@
 import { Alert, AlertColor, IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function ErrorAlert({
-  type = 'error' as AlertColor,
-  error,
-  handleClose,
-}) {
+const ErrorAlert = ({ type = 'error' as AlertColor, error, handleClose }) => {
   return (
     <Alert
       action={
@@ -24,3 +20,5 @@ export default function ErrorAlert({
     </Alert>
   )
 }
+
+export default ErrorAlert

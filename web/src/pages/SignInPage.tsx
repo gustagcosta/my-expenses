@@ -1,11 +1,22 @@
-import { Box, Button, TextField, Link } from '@mui/material'
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
-import { useHistory, Link as LinkRouter } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
-
 import Layout from '../components/Layout'
 import { AuthContext } from '../contexts/AuthContext'
+import { useHistory } from 'react-router'
 import ErrorAlert from '../components/ErrorAlert'
 
 export default function SignInPage() {
@@ -43,8 +54,8 @@ export default function SignInPage() {
         <Box
           component='form'
           onSubmit={handleSubmit(handleSignIn)}
-          sx={isBrowser ? { mt: 1, width: '70%' } : { mt: 1, width: '90%' }}
           noValidate
+          sx={{ mt: 1 }}
         >
           <TextField
             margin='normal'
@@ -76,17 +87,11 @@ export default function SignInPage() {
           >
             Sign In
           </Button>
-          <Link href='/sign-up' variant='body2'>
-            <LinkRouter
-              to='/sign-up'
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              {"Don't have an account? Sign Up"}
-            </LinkRouter>
-          </Link>
-          {error && (
-            <ErrorAlert error={error} handleClose={() => setError(null)} />
-          )}
+          <Grid width={'100%'}>
+            {error && (
+              <ErrorAlert error={error} handleClose={() => setError(null)} />
+            )}
+          </Grid>
         </Box>
       </Box>
     </Layout>
