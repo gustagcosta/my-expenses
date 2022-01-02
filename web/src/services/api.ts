@@ -1,6 +1,7 @@
 import { getToken } from './storage'
 
 async function api(url: string, method: string, body: object = null) {
+
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
