@@ -30,7 +30,6 @@ export default function Layout({ children, title }: Props) {
   const history = useHistory()
 
   const [anchorEl, setAnchorEl] = useState(null)
-  const [newBill, setNewBill] = useState(false)
 
   const open = Boolean(anchorEl)
 
@@ -50,12 +49,6 @@ export default function Layout({ children, title }: Props) {
           </Typography>
           <BrowserView>
             {user && [
-              <Button
-                onClick={() => setNewBill(true)}
-                sx={{ color: 'white', display: 'inline-block', mr: 1 }}
-              >
-                New
-              </Button>,
               <Button
                 onClick={handleLogout}
                 sx={{ color: 'white', display: 'inline-block' }}
@@ -95,12 +88,7 @@ export default function Layout({ children, title }: Props) {
         >
           {user
             ? [
-                <MenuItem onClick={() => setNewBill(true)}>
-                  <ListItemIcon>
-                    <AddIcon />
-                  </ListItemIcon>
-                  New
-                </MenuItem>,
+                
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <LogoutIcon />
@@ -137,7 +125,7 @@ export default function Layout({ children, title }: Props) {
 
       <Container component='main'>{children}</Container>
 
-      {<BillDialog open={newBill} handleClose={() => setNewBill(false)} />}
+      
     </div>
   )
 }
