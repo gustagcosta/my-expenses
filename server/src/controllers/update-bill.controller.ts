@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import BillService from '../services/BillService';
-import { CustomError } from '../utils/customError';
+import { UpdateBillService } from '../services';
+import { HttpError } from '../helpers/http-error';
 
 export class UpdateBillController {
   static async execute(request: Request, response: Response) {
@@ -8,7 +8,7 @@ export class UpdateBillController {
 
     const userId = request.userId;
 
-    const result = await BillService.update({
+    const result = await UpdateBillService.execute({
       id,
       description,
       expire_date,
@@ -16,7 +16,7 @@ export class UpdateBillController {
       userId,
     });
 
-    if (result instanceof CustomError) {
+    if (result instanceof HttpError) {
       return response
         .status(result.statusCode)
         .json({ message: result.message });

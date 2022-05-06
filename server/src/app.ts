@@ -1,8 +1,8 @@
-import './dotenv';
+import './helpers/dotenv';
 import express from 'express';
+import cors from 'cors';
 import { routes } from './routes';
 import { errorHandler, notFound } from './middlewares/error';
-import cors from 'cors';
 
 const app = express();
 

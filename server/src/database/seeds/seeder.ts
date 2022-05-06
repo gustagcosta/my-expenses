@@ -1,8 +1,8 @@
-import "../../dotenv";
+import "../../helpers/dotenv";
 import { Knex } from "knex";
-import { User } from "../../models/User";
+import { User } from "../../models/user";
 import { hash } from "bcryptjs";
-import { Role } from "../../models/Role";
+import { Role } from "../../models/role";
 import { db } from "../db";
 
 export async function seed(knex: Knex): Promise<void> {

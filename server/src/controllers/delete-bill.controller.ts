@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import BillService from '../services/BillService';
-import { CustomError } from '../utils/customError';
+import { DeleteBillService } from '../services';
+import { HttpError } from '../helpers/http-error';
 
-export class GetAllBillsController {
+export class DeleteBillController {
   static async execute(request: Request, response: Response) {
-    const result = await BillService.index(request.userId);
+    const result = await DeleteBillService.execute(request.params.id);
 
-    if (result instanceof CustomError) {
+    if (result instanceof HttpError) {
       return response
         .status(result.statusCode)
         .json({ message: result.message });

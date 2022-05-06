@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import userService from '../services/UserService';
-import { CustomError } from '../utils/customError';
+import { GetAllBillsService } from '../services';
+import { HttpError } from '../helpers/http-error';
 
-export class GetProfileController {
+export class GetAllBillsController {
   static async execute(request: Request, response: Response) {
-    const result = await userService.profile(request.userId);
+    const result = await GetAllBillsService.execute(request.userId);
 
-    if (result instanceof CustomError) {
+    if (result instanceof HttpError) {
       return response
         .status(result.statusCode)
         .json({ message: result.message });

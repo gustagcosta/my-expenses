@@ -1,4 +1,4 @@
-import { BaseModel } from "./BaseModel";
+import { BaseModel } from "./common/base-model";
 
 export class User extends BaseModel {
   name: string;

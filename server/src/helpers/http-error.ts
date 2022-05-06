@@ -1,4 +1,4 @@
-export class CustomError {
+export class HttpError {
   statusCode: number;
   message: string;
 
