@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-export class BaseEntity {
+export class BaseModel {
   id: string;
 
   constructor() {

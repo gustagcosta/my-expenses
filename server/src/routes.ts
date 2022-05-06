@@ -1,19 +1,28 @@
-import { Router } from "express"
-import SessionController from "./controllers/SessionController"
-import BillController from "./controllers/BillController"
-import UserController from "./controllers/UserController"
-import { authentication } from "./middlewares/authentication"
+import { Router } from 'express';
+import { auth } from './middlewares/auth';
+import {
+  CreateBillController,
+  DeleteBillController,
+  GetAllBillsController,
+  GetBillController,
+  GetProfileController,
+  LoginController,
+  RegisterController,
+  UpdateBillController,
+} from './controllers';
 
-const routes = Router()
+const routes = Router();
 
-routes.post("/register", UserController.store)
-routes.post("/login", SessionController.login)
-routes.get("/profile", UserController.profile)
+// Public Routes
+routes.post('/register', RegisterController.execute);
+routes.post('/login', LoginController.execute);
+routes.get('/profile', GetProfileController.execute);
 
-routes.get("/bills", authentication(), BillController.index)
-routes.get("/bills/:id", authentication(), BillController.show)
-routes.post("/bills", authentication(), BillController.store)
-routes.put("/bills", authentication(), BillController.update)
-routes.delete("/bills/:id", authentication(), BillController.destroy)
+// Private Routes
+routes.get('/bills', auth(), GetAllBillsController.execute);
+routes.get('/bills/:id', auth(), GetBillController.execute);
+routes.post('/bills', auth(), CreateBillController.execute);
+routes.put('/bills', auth(), UpdateBillController.execute);
+routes.delete('/bills/:id', auth(), DeleteBillController.execute);
 
-export { routes }
+export { routes };

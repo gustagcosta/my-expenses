@@ -1,7 +1,6 @@
-import { BaseEntity } from "./BaseEntity";
+import { BaseModel } from "./BaseModel";
 
-export class User extends BaseEntity {
-  [x: string]: string;
+export class User extends BaseModel {
   name: string;
   email: string;
   password: string;

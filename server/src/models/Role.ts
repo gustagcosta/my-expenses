@@ -1,6 +1,6 @@
-import { BaseEntity } from "./BaseEntity";
+import { BaseModel } from "./BaseModel";
 
-export class Role extends BaseEntity {
+export class Role extends BaseModel {
   name: string;
 
   constructor(name: string) {

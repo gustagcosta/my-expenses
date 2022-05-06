@@ -1,6 +1,6 @@
-import { BaseEntity } from "./BaseEntity";
+import { BaseModel } from "./BaseModel";
 
-export class Bill extends BaseEntity {
+export class Bill extends BaseModel {
   description: string;
   expire_date: string;
   value: number;
