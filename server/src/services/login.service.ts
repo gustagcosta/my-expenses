@@ -23,7 +23,7 @@ export class LoginService {
         return new HttpError(400, "Missing data");
       }
 
-      const queryResult = await db.raw(
+      const [queryResult] = await db.raw(
         `
         select u.id, u.name, u.email, u.password, r.name as role 
         from users u, roles r 
@@ -32,7 +32,7 @@ export class LoginService {
       `
       );
 
-      const user = queryResult.rows[0];
+      const [user] = queryResult;
 
       if (!user) {
         return new HttpError(404, "User does not exists");
@@ -58,6 +58,7 @@ export class LoginService {
 
       return { token, user };
     } catch (error) {
+      console.error(error);
       return new HttpError(500, "Unknown error");
     }
   }

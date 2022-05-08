@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { auth } from './middlewares/auth';
 import {
   CreateBillController,
@@ -14,8 +14,11 @@ import {
 const routes = Router();
 
 // Public Routes
-routes.post('/register', RegisterController.execute);
+routes.get('/', (req: Request, res: Response) => { 
+  return res.send("ok ok ok"); 
+});
 routes.post('/login', LoginController.execute);
+routes.post('/register', RegisterController.execute);
 routes.get('/profile', GetProfileController.execute);
 
 // Private Routes
