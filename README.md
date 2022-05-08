@@ -1,3 +1,1 @@
-# My Expenses App 
-
-- [] test commit
+# My Expenses App
