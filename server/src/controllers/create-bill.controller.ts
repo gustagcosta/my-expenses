@@ -21,6 +21,6 @@ export class CreateBillController {
         .json({ message: result.message });
     }
 
-    return response.json(result);
+    return response.status(201).send();
   }
 }

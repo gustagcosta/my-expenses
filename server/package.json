@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/app.ts",
+    "start": "nodemon src/app.ts",
     "db": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts",
     "migrate": "yarn db migrate:latest",
     "seed": "yarn db seed:run"
@@ -28,7 +28,6 @@
     "knex": "^0.95.13",
     "moment": "^2.29.1",
     "mysql2": "^2.3.3",
-    "pg": "^8.7.1",
     "uuid": "^8.3.2"
   }
 }

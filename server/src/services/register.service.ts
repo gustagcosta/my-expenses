@@ -15,7 +15,7 @@ export class RegisterService {
     name,
     email,
     password,
-  }: UserRequest): Promise<User | HttpError> {
+  }: UserRequest): Promise<void | HttpError> {
     try {
       if ([name, email, password].some((i) => i == undefined || i == null)) {
         return new HttpError(400, 'Missing data');
@@ -47,15 +47,11 @@ export class RegisterService {
 
       const passwordHash = await hash(password, 8);
 
-      const userRole = await db('roles').where('name', '=', 'user').first();
-
-      const newUser = new User(name, email, passwordHash, userRole.id);
+      const newUser = new User(name, email, passwordHash, 'user');
 
       await db('users').insert(newUser);
 
       console.log(`Registering ${name}`);
-
-      return newUser;
     } catch (error) {
       console.error(error);
       return new HttpError(500, 'Unknown error');

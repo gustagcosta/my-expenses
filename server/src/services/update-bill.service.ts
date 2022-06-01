@@ -18,7 +18,7 @@ export class UpdateBillService {
     expire_date,
     value,
     userId,
-  }: BillUpdateRequestDTO): Promise<object | HttpError> {
+  }: BillUpdateRequestDTO): Promise<void | HttpError> {
     try {
       if (description.length < 3) {
         return new HttpError(
@@ -41,7 +41,7 @@ export class UpdateBillService {
         return new HttpError(404, 'Bill with this id not found');
       }
 
-      if (!moment(expire_date, 'YYYYMMDD', true).isValid()) {
+      if (!moment(expire_date, 'YYYY-MM-DD', true).isValid()) {
         return new HttpError(400, 'Expire date field must is invalid');
       }
 
@@ -54,6 +54,7 @@ export class UpdateBillService {
           description,
           expire_date,
           value,
+          updated_at: new Date(),
         })
         .where('id', '=', id);
     } catch (error) {

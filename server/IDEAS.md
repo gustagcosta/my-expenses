@@ -1,0 +1,7 @@
+- separe domain to frameworks/libs
+- dockerize with database
+- apply best practices in api (paginate, filter, fields)
+- remove @types folder
+- deploy
+- helpers scripts
+- replace moment for date-fns maybe

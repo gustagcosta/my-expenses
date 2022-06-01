@@ -5,7 +5,6 @@ import {
   DeleteBillController,
   GetAllBillsController,
   GetBillController,
-  GetProfileController,
   LoginController,
   RegisterController,
   UpdateBillController,
@@ -14,12 +13,8 @@ import {
 const routes = Router();
 
 // Public Routes
-routes.get('/', (req: Request, res: Response) => { 
-  return res.send("ok ok ok"); 
-});
 routes.post('/login', LoginController.execute);
 routes.post('/register', RegisterController.execute);
-routes.get('/profile', GetProfileController.execute);
 
 // Private Routes
 routes.get('/bills', auth(), GetAllBillsController.execute);

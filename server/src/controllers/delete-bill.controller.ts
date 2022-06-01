@@ -12,6 +12,6 @@ export class DeleteBillController {
         .json({ message: result.message });
     }
 
-    return response.json(result);
+    return response.status(204).send();
   }
 }

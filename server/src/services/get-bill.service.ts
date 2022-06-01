@@ -1,10 +1,11 @@
 import { db } from '../database/db';
 import { HttpError } from '../helpers/http-error';
+import { Bill } from '../models/bill';
 
 export class GetBillService {
-  static async execute(id: string, userId: string): Promise<object | HttpError> {
+  static async execute(id: string, userId: string): Promise<Bill | HttpError> {
     try {
-      const bill = await db('bills')
+      const bill: Bill = await db('bills')
         .select('*')
         .where('id', '=', id)
         .where('user_id', '=', userId)

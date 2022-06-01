@@ -16,8 +16,16 @@ export class CreateBillService {
     expire_date,
     value,
     userId,
-  }: BillStoreRequestDTO): Promise<object | HttpError> {
+  }: BillStoreRequestDTO): Promise<void | HttpError> {
     try {
+      if (
+        [description, expire_date, value, userId].some(
+          (i) => i == undefined || i == null
+        )
+      ) {
+        return new HttpError(400, 'Missing data');
+      }
+
       if (description.length < 3) {
         return new HttpError(
           400,
@@ -29,7 +37,7 @@ export class CreateBillService {
         return new HttpError(400, 'Value field must be greater than 0');
       }
 
-      if (!moment(expire_date, 'YYYYMMDD', true).isValid()) {
+      if (!moment(expire_date, 'YYYY-MM-DD', true).isValid()) {
         return new HttpError(400, 'Expire date field is invalid');
       }
 
@@ -44,8 +52,6 @@ export class CreateBillService {
       bill.user_id = userId;
 
       await db('bills').insert(bill);
-
-      return bill;
     } catch (error) {
       console.error(error);
       return new HttpError(500, 'Unknown error');

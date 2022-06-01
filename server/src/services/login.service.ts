@@ -1,7 +1,8 @@
-import { compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
-import { db } from "../database/db";
-import { HttpError } from "../helpers/http-error";
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { db } from '../database/db';
+import { HttpError } from '../helpers/http-error';
+import { User } from '../models/user';
 
 type LoginRequest = {
   email: string;
@@ -10,56 +11,50 @@ type LoginRequest = {
 
 type ResponseObject = {
   token: string;
-  user: object;
+  user: User;
 };
 
 export class LoginService {
   static async execute({
     email,
-    password
+    password,
   }: LoginRequest): Promise<ResponseObject | HttpError> {
     try {
       if ([email, password].some((i) => i == undefined || i == null)) {
-        return new HttpError(400, "Missing data");
+        return new HttpError(400, 'Missing data');
       }
 
-      const [queryResult] = await db.raw(
-        `
-        select u.id, u.name, u.email, u.password, r.name as role 
-        from users u, roles r 
-        where r.id = u.role_id
-        and u.email = '${email}'
-      `
-      );
-
-      const [user] = queryResult;
+      const user: User = await db('users')
+        .select('*')
+        .where('email', '=', email)
+        .first();
 
       if (!user) {
-        return new HttpError(404, "User does not exists");
+        return new HttpError(404, 'User does not exists');
       }
 
       const passwordMatch = await compare(password, user.password);
 
       if (!passwordMatch) {
-        return new HttpError(401, "Invalid credetials");
+        return new HttpError(401, 'Invalid credetials');
       }
 
       if (!process.env.SECRET_JWT) {
-        return new HttpError(500, "No secret token found");
+        return new HttpError(500, 'No secret token found');
       }
 
       const token = sign({}, process.env.SECRET_JWT, {
-        subject: user.id
+        subject: user.id,
       });
 
       delete user.password;
 
-      console.log(`Logging ${user.name}`)
+      console.log(`Logging ${user.name}`);
 
       return { token, user };
     } catch (error) {
       console.error(error);
-      return new HttpError(500, "Unknown error");
+      return new HttpError(500, 'Unknown error');
     }
   }
 }

@@ -52,7 +52,6 @@ export default function IndexPage() {
 
     if (response.status === 200) {
       const bills = await response.json()
-      console.log(bills)
       setBills(bills)
     } else if (response.status === 401) {
       logout()
@@ -80,6 +79,7 @@ export default function IndexPage() {
             const date = format(new Date(bill.expire_date), 'dd/MM/yyyy')
             return (
               <ListItem
+                key={bill.id}
                 secondaryAction={[
                   <IconButton>
                     <EditIcon
@@ -100,7 +100,7 @@ export default function IndexPage() {
                 ]}
               >
                 <ListItemText
-                  primary={`${date} - ${bill.value} `}
+                  primary={`${date} - ${bill.value} R$ `}
                   secondary={
                     <React.Fragment>{bill.description}</React.Fragment>
                   }

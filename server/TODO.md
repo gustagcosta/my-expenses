@@ -1,9 +1,0 @@
-- [ ] change database lib Prisma?
-- [ ] database scripts
-- [ ] prettier + eslint config
-- [ ] logger
-- [ ] up and down http-server
-- [ ] separate app from server
-- [ ] refactor and standardize inputs and outputs of services
-- [ ] more erros and more controller responsibility to deal with them
-- [ ] parse request following the Unit Of Work pattern

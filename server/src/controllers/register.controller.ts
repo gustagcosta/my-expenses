@@ -18,6 +18,6 @@ export class RegisterController {
         .json({ message: result.message });
     }
 
-    return response.json(result);
+    return response.status(201).send();
   }
 }

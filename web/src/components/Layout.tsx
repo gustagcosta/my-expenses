@@ -14,11 +14,9 @@ import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import MenuIcon from '@mui/icons-material/Menu'
 import LogoutIcon from '@mui/icons-material/Logout'
-import AddIcon from '@mui/icons-material/Add'
 import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { BrowserView, MobileView } from 'react-device-detect'
-import BillDialog from './BillDialog'
 
 type Props = {
   children?: ReactNode

@@ -53,7 +53,7 @@ export default function BillDialog({
   const handleSave = async () => {
     setError('')
 
-    let expireDateParse = format(expireDate, 'yyyyMMdd')
+    let expireDateParse = format(expireDate, 'yyyy-MM-dd')
 
     const method = edit ? 'PUT' : 'POST'
 
@@ -72,7 +72,7 @@ export default function BillDialog({
 
     const response = await api(`/api/v1/bills`, method, body)
 
-    if (response.status === 200) {
+    if (response.status === 201 || response.status === 204) {
       resetState()
       handleClose()
       reload()
