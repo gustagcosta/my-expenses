@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  myexpenses-database:
+    image: mysql:5.7
+    container_name: myexpenses-database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: docker
+    networks:
+      - network
+  myexpenses-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: myexpenses/server
+    container_name: myexpenses-server
+    restart: unless-stopped
+    ports:
+      - "3333:3333"
+    depends_on:
+      - myexpenses-database
+    volumes:
+      - .:/application
+    networks:
+      - network
+networks:
+  network:
+    driver: bridge

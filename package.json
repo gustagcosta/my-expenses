@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/app.ts",
-    "db": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts",
-    "migrate": "yarn db migrate:latest",
-    "seed": "yarn db seed:run"
+    "dev": "nodemon src/app.ts",
+    "build": "tsc --build",
+    "start": "node build/app.js",
+    "db": "./node_modules/.bin/knex --knexfile src/database/knexfile.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
