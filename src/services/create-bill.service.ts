@@ -1,7 +1,7 @@
 import { db } from '../database/db';
 import { Bill } from '../models/bill';
-import moment from 'moment';
 import { HttpError } from '../helpers/http-error';
+import { isValid } from 'date-fns';
 
 type BillStoreRequestDTO = {
   description: string;
@@ -37,7 +37,7 @@ export class CreateBillService {
         return new HttpError(400, 'Value field must be greater than 0');
       }
 
-      if (!moment(expire_date, 'YYYY-MM-DD', true).isValid()) {
+      if (!isValid(expire_date)) {
         return new HttpError(400, 'Expire date field is invalid');
       }
 

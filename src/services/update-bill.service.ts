@@ -1,7 +1,7 @@
 import { db } from '../database/db';
 import { Bill } from '../models/bill';
-import moment from 'moment';
 import { HttpError } from '../helpers/http-error';
+import { isValid } from 'date-fns';
 
 type BillUpdateRequestDTO = {
   description: string;
@@ -41,7 +41,7 @@ export class UpdateBillService {
         return new HttpError(404, 'Bill with this id not found');
       }
 
-      if (!moment(expire_date, 'YYYY-MM-DD', true).isValid()) {
+      if (!isValid(expire_date)) {
         return new HttpError(400, 'Expire date field must is invalid');
       }
 
