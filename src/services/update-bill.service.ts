@@ -41,7 +41,7 @@ export class UpdateBillService {
         return new HttpError(404, 'Bill with this id not found');
       }
 
-      if (!isValid(expire_date)) {
+      if (!isValid(new Date(expire_date))) {
         return new HttpError(400, 'Expire date field must is invalid');
       }
 

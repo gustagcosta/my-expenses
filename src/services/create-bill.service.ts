@@ -37,7 +37,7 @@ export class CreateBillService {
         return new HttpError(400, 'Value field must be greater than 0');
       }
 
-      if (!isValid(expire_date)) {
+      if (!isValid(new Date(expire_date))) {
         return new HttpError(400, 'Expire date field is invalid');
       }
 
