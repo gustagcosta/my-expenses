@@ -20,7 +20,7 @@ export class LoginService {
     password,
   }: LoginRequest): Promise<ResponseObject | HttpError> {
     try {
-      if ([email, password].some((i) => i == undefined || i == null)) {
+      if ([email, password].some((i) => !i)) {
         return new HttpError(400, 'Missing data');
       }
 

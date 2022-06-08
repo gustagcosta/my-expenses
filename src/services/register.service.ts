@@ -17,7 +17,7 @@ export class RegisterService {
     password,
   }: UserRequest): Promise<void | HttpError> {
     try {
-      if ([name, email, password].some((i) => i == undefined || i == null)) {
+      if ([name, email, password].some((i) => !i)) {
         return new HttpError(400, 'Missing data');
       }
 

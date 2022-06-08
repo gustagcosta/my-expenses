@@ -20,6 +20,10 @@ export class UpdateBillService {
     userId,
   }: BillUpdateRequestDTO): Promise<void | HttpError> {
     try {
+      if ([description, expire_date, value].some((i) => !i)) {
+        return new HttpError(400, 'Missing data');
+      }
+
       if (description.length < 3) {
         return new HttpError(
           400,

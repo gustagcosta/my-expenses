@@ -18,11 +18,7 @@ export class CreateBillService {
     userId,
   }: BillStoreRequestDTO): Promise<void | HttpError> {
     try {
-      if (
-        [description, expire_date, value, userId].some(
-          (i) => i == undefined || i == null
-        )
-      ) {
+      if ([description, expire_date, value].some((i) => !i)) {
         return new HttpError(400, 'Missing data');
       }
 

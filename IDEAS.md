@@ -1,3 +1,4 @@
 - separe domain to frameworks/libs
 - apply best practices in api (paginate, filter, fields)
+- nginx container
 - deploy

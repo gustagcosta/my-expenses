@@ -10,8 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1', routes);
+
 app.get('/', (req, res) => {
-  console.log(process.env);
   res.send({ ok: 'cool' });
 });
 
