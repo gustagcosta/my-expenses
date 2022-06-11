@@ -5,6 +5,7 @@ export class Bill extends BaseModel {
   expire_date: string;
   value: number;
   user_id: string;
+  done?: boolean;
 
   constructor() {
     super();

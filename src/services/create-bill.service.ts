@@ -8,6 +8,7 @@ type BillStoreRequestDTO = {
   expire_date: string;
   value: number;
   userId: string;
+  done?: boolean;
 };
 
 export class CreateBillService {
@@ -16,6 +17,7 @@ export class CreateBillService {
     expire_date,
     value,
     userId,
+    done,
   }: BillStoreRequestDTO): Promise<void | HttpError> {
     try {
       if ([description, expire_date, value].some((i) => !i)) {
@@ -41,11 +43,16 @@ export class CreateBillService {
         return new HttpError(400, 'value field must be a number');
       }
 
+      if (!done) {
+        done = false;
+      }
+
       const bill = new Bill();
       bill.description = description;
       bill.expire_date = expire_date;
       bill.value = value;
       bill.user_id = userId;
+      bill.done = done ? true : false;
 
       await db('bills').insert(bill);
     } catch (error) {

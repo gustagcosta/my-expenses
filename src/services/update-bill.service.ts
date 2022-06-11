@@ -9,6 +9,7 @@ type BillUpdateRequestDTO = {
   value: number;
   userId: string;
   id: string;
+  done?: boolean;
 };
 
 export class UpdateBillService {
@@ -18,6 +19,7 @@ export class UpdateBillService {
     expire_date,
     value,
     userId,
+    done,
   }: BillUpdateRequestDTO): Promise<void | HttpError> {
     try {
       if ([description, expire_date, value].some((i) => !i)) {
@@ -53,12 +55,15 @@ export class UpdateBillService {
         return new HttpError(400, 'value field must be a number');
       }
 
+      console.log(done)
+
       await db('bills')
         .update({
           description,
           expire_date,
           value,
           updated_at: new Date(),
+          done: done ? true : false,
         })
         .where('id', '=', id);
     } catch (error) {

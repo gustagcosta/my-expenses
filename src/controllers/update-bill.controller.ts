@@ -4,7 +4,7 @@ import { HttpError } from '../helpers/http-error';
 
 export class UpdateBillController {
   static async execute(request: Request, response: Response) {
-    const { id, description, expire_date, value } = request.body;
+    const { id, description, expire_date, value, done } = request.body;
 
     const userId = request.userId;
 
@@ -14,6 +14,7 @@ export class UpdateBillController {
       expire_date,
       value,
       userId,
+      done,
     });
 
     if (result instanceof HttpError) {
