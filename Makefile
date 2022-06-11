@@ -12,6 +12,8 @@ down:
 stop:
 	docker compose stop
 
+restart: down build up
+
 logs:
 	docker compose logs --tail=10 -f
 
