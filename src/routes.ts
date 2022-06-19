@@ -9,6 +9,7 @@ import {
   RegisterController,
   UpdateBillController,
 } from './controllers';
+import { StatusBillController } from './controllers/status-bill.controller';
 
 const routes = Router();
 
@@ -22,5 +23,6 @@ routes.get('/bills/:id', auth(), GetBillController.execute);
 routes.post('/bills', auth(), CreateBillController.execute);
 routes.put('/bills', auth(), UpdateBillController.execute);
 routes.delete('/bills/:id', auth(), DeleteBillController.execute);
+routes.put('/bills/:id/:done', auth(), StatusBillController.execute);
 
 export { routes };
